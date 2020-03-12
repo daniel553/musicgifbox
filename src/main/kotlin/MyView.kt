@@ -24,10 +24,11 @@ class MyView : View(), NativeKeyListener {
     private val defaultImagePath = "petepandalogo.png"
 
     /**
-     * Collection of clips [Clip] to be loaded and presented in screen.
+     * Collection of clips [Clip] to be loaded and presented in the screen.
      */
     private val clips: Array<Clip> = arrayOf(
-        Clip(11, "download.gif", "0.mp3", 3000) // Test
+        Clip(11, "cell-terror.gif", "cell-terror.mp3", 5000),
+        Clip(11, "cell-terror.gif", "cell-terror.mp3", 5000)
     )
 
     /**

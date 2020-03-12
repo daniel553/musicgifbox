@@ -10,21 +10,18 @@ import kotlin.system.exitProcess
  */
 class MyApp : App(MyView::class) {
 
-    override fun start(stage: Stage) {
-        //For borderless window
-        //stage.initStyle(StageStyle.UNDECORATED)
-        super.start(stage)
-    }
-
     /**
      * Auxiliary function to launch [App]
      */
-    companion object {
-        @JvmStatic
-        fun main(args: Array<String>) {
-            launch<MyApp>(args)
-            exitProcess(0)
-        }
+    fun main(args: Array<String>) {
+        launch<MyApp>(args)
+        exitProcess(0)
     }
 
+    override fun start(stage: Stage) {
+        //For borderless window
+        //stage.initStyle(StageStyle.UNDECORATED)
+        stage.initStyle(StageStyle.DECORATED)
+        super.start(stage)
+    }
 }

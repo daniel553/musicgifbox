@@ -12,7 +12,7 @@ object SoundPlayer {
      */
     fun play(path: String) {
         try {
-            val sound = Media(SoundPlayer::class.java.getResource(path)?.toString());
+            val sound = Media(MyApp::class.java.getResource(path)?.toString());
             player = MediaPlayer(sound)
             player?.play()
         } catch (ex: Exception) {

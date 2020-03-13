@@ -6,14 +6,24 @@ import javafx.scene.media.MediaPlayer
  */
 object SoundPlayer {
     private var player: MediaPlayer?=null
+    private var sounds = mutableMapOf<String, Media>()
 
     /**
      * Plays a specific sound file.
+     * @param path of resource
+     * @param loop to repeat until stop
+     * @param callback
      */
-    fun play(path: String) {
+    fun play(path: String, loop: Boolean? = false, callback: PlayerCallback? = null) {
         try {
-            val sound = Media(MyApp::class.java.getResource(path)?.toString());
-            player = MediaPlayer(sound)
+            if(!sounds.containsKey(path))
+                sounds[path] = Media(MyApp::class.java.getResource(path)?.toString())
+
+            player = MediaPlayer(sounds[path])
+            player?.setOnReady {
+                //println("On Ready")
+                callback?.onReady()
+            }
             player?.play()
         } catch (ex: Exception) {
             println("sound can't be played $path")
@@ -29,5 +39,9 @@ object SoundPlayer {
         }catch (ex: Exception){
             println("sound can't be stopped")
         }
+    }
+
+    interface PlayerCallback {
+        fun onReady()
     }
 }

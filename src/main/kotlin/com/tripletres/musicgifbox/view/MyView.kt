@@ -4,18 +4,18 @@ import com.tripletres.musicgifbox.controller.ClipController
 import com.tripletres.musicgifbox.model.Clip
 import com.tripletres.musicgifbox.util.KeyListener
 import com.tripletres.musicgifbox.util.SoundPlayer
-import javafx.scene.Scene
+import javafx.scene.control.Button
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
-import javafx.scene.layout.Background
-import javafx.scene.layout.BackgroundFill
 import javafx.scene.paint.Color
+import javafx.stage.StageStyle
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jnativehook.keyboard.NativeKeyEvent
 import org.jnativehook.keyboard.NativeKeyListener
 import tornadofx.*
+import kotlin.system.exitProcess
 
 /**
  * Main and unique view to show the Image, Gif and play clips.
@@ -35,10 +35,13 @@ class MyView : View(), NativeKeyListener {
      */
     private val clips = ClipController().clipData()
 
+    private var xOffset = 0.0
+    private var yOffset = 0.0
+
     /**
      * Root view, shows a default image at the beginning of times
      */
-    override val root = vbox {
+    override val root = stackpane {
         val url = defaultImagePath
         setPrefSize(400.0, 400.0)
 
@@ -46,6 +49,17 @@ class MyView : View(), NativeKeyListener {
             fitHeightProperty().bind(parent.prefHeight(400.0).toProperty())
             fitWidthProperty().bind(parent.prefWidth(400.0).toProperty())
         }
+
+        setOnMousePressed {
+            xOffset = it.sceneX
+            yOffset = it.sceneY
+        }
+
+        setOnMouseDragged {
+            currentStage?.x = it.screenX - xOffset
+            currentStage?.y = it.screenY - yOffset
+        }
+
     }
 
     override fun onDock() {
@@ -108,8 +122,19 @@ class MyView : View(), NativeKeyListener {
 
     override fun nativeKeyTyped(e: NativeKeyEvent) {}
     override fun nativeKeyPressed(e: NativeKeyEvent) {
+        if(e.keyCode == 1) exit()
+
         println("-------------------${e.keyCode}--------------------------")
         showAnimation(e.keyCode)
     }
     override fun nativeKeyReleased(e: NativeKeyEvent) {}
+
+    /**
+     * Exits process when current window is focus
+     */
+    private fun exit() {
+        if(currentWindow != null && currentWindow!!.isFocused)
+            exitProcess(0)
+    }
+
 }

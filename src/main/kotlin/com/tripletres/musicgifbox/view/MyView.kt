@@ -4,17 +4,18 @@ import com.tripletres.musicgifbox.controller.ClipController
 import com.tripletres.musicgifbox.model.Clip
 import com.tripletres.musicgifbox.util.KeyListener
 import com.tripletres.musicgifbox.util.SoundPlayer
+import javafx.scene.Scene
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
+import javafx.scene.layout.Background
+import javafx.scene.layout.BackgroundFill
+import javafx.scene.paint.Color
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jnativehook.keyboard.NativeKeyEvent
 import org.jnativehook.keyboard.NativeKeyListener
-import tornadofx.View
-import tornadofx.imageview
-import tornadofx.toProperty
-import tornadofx.vbox
+import tornadofx.*
 
 /**
  * Main and unique view to show the Image, Gif and play clips.
@@ -27,7 +28,7 @@ class MyView : View(), NativeKeyListener {
     /**
      * Default image path to show the "background element in the window.
      */
-    private val defaultImagePath = "petepandalogo.png"
+    private val defaultImagePath = "petepandalogo-borderless.png"
 
     /**
      * Collection of clips [Clip] to be loaded and presented in the screen.
@@ -39,11 +40,18 @@ class MyView : View(), NativeKeyListener {
      */
     override val root = vbox {
         val url = defaultImagePath
+        setPrefSize(400.0, 400.0)
+
         mainImageView = imageview(url) {
-            setPrefSize(200.0, 200.0)
-            fitHeightProperty().bind(parent.prefHeight(200.0).toProperty())
-            fitWidthProperty().bind(parent.prefWidth(200.0).toProperty())
+            fitHeightProperty().bind(parent.prefHeight(400.0).toProperty())
+            fitWidthProperty().bind(parent.prefWidth(400.0).toProperty())
         }
+    }
+
+    override fun onDock() {
+        super.onDock()
+        //Manual fill of root scene, am I doing ok?
+        root.scene.fill = Color.TRANSPARENT
     }
 
     init {

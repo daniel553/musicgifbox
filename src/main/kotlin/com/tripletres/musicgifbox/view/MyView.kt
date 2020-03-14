@@ -4,17 +4,18 @@ import com.tripletres.musicgifbox.controller.ClipController
 import com.tripletres.musicgifbox.model.Clip
 import com.tripletres.musicgifbox.util.KeyListener
 import com.tripletres.musicgifbox.util.SoundPlayer
+import javafx.scene.control.Button
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
+import javafx.scene.paint.Color
+import javafx.stage.StageStyle
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jnativehook.keyboard.NativeKeyEvent
 import org.jnativehook.keyboard.NativeKeyListener
-import tornadofx.View
-import tornadofx.imageview
-import tornadofx.toProperty
-import tornadofx.vbox
+import tornadofx.*
+import kotlin.system.exitProcess
 
 /**
  * Main and unique view to show the Image, Gif and play clips.
@@ -27,23 +28,44 @@ class MyView : View(), NativeKeyListener {
     /**
      * Default image path to show the "background element in the window.
      */
-    private val defaultImagePath = "petepandalogo.png"
+    private val defaultImagePath = "petepandalogo-borderless.png"
 
     /**
      * Collection of clips [Clip] to be loaded and presented in the screen.
      */
     private val clips = ClipController().clipData()
 
+    private var xOffset = 0.0
+    private var yOffset = 0.0
+
     /**
      * Root view, shows a default image at the beginning of times
      */
-    override val root = vbox {
+    override val root = stackpane {
         val url = defaultImagePath
+        setPrefSize(400.0, 400.0)
+
         mainImageView = imageview(url) {
-            setPrefSize(200.0, 200.0)
-            fitHeightProperty().bind(parent.prefHeight(200.0).toProperty())
-            fitWidthProperty().bind(parent.prefWidth(200.0).toProperty())
+            fitHeightProperty().bind(parent.prefHeight(400.0).toProperty())
+            fitWidthProperty().bind(parent.prefWidth(400.0).toProperty())
         }
+
+        setOnMousePressed {
+            xOffset = it.sceneX
+            yOffset = it.sceneY
+        }
+
+        setOnMouseDragged {
+            currentStage?.x = it.screenX - xOffset
+            currentStage?.y = it.screenY - yOffset
+        }
+
+    }
+
+    override fun onDock() {
+        super.onDock()
+        //Manual fill of root scene, am I doing ok?
+        root.scene.fill = Color.TRANSPARENT
     }
 
     init {
@@ -100,8 +122,19 @@ class MyView : View(), NativeKeyListener {
 
     override fun nativeKeyTyped(e: NativeKeyEvent) {}
     override fun nativeKeyPressed(e: NativeKeyEvent) {
+        if(e.keyCode == 1) exit()
+
         println("-------------------${e.keyCode}--------------------------")
         showAnimation(e.keyCode)
     }
     override fun nativeKeyReleased(e: NativeKeyEvent) {}
+
+    /**
+     * Exits process when current window is focus
+     */
+    private fun exit() {
+        if(currentWindow != null && currentWindow!!.isFocused)
+            exitProcess(0)
+    }
+
 }

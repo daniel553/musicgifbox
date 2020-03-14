@@ -24,7 +24,7 @@ class MyApp : App(MyView::class) {
     override fun start(stage: Stage) {
         //For borderless window
         //stage.initStyle(StageStyle.UNDECORATED)
-        stage.initStyle(StageStyle.TRANSPARENT)
+        stage.initStyle(StageStyle.UNDECORATED)
         super.start(stage)
     }
 }

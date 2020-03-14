@@ -1,5 +1,6 @@
 package com.tripletres.musicgifbox.view
 
+import com.tripletres.musicgifbox.controller.ClipController
 import com.tripletres.musicgifbox.model.Clip
 import com.tripletres.musicgifbox.util.KeyListener
 import com.tripletres.musicgifbox.util.SoundPlayer
@@ -31,36 +32,7 @@ class MyView : View(), NativeKeyListener {
     /**
      * Collection of clips [Clip] to be loaded and presented in the screen.
      */
-    private val clips: Array<Clip> = arrayOf(
-        Clip(11, "mesi-goal.gif", "mesi-goal.mp3", 13000),
-        Clip(83, "gio-gol.gif", "gio-gol.mp3", 13000),
-        Clip(2, "helpme.gif", "helpme.mp3", 5000),
-        Clip(3, "parrot-wtf.gif", "parrot-wtf.mp3", 4500),
-        Clip(4, "jump-pussy.gif", "jump-pussy.mp3", 8000),
-        Clip(5, "no-please.gif", "no-please.mp3", 8000),
-        Clip(
-            6,
-            "estamos-en-la-b.gif",
-            "estamos-en-la-b.mp3",
-            10000
-        ),
-        Clip(7, "tom-scream.gif", "tom-scream.mp3", 3500),
-        Clip(8, "cell-terror.gif", "cell-terror.mp3", 5000),
-        Clip(9, "cherc.gif", "cherc.mp3", 4000),
-        Clip(10, "yoloooo.gif", "yoloooo.mp3", 5000),
-        Clip(3662, "ya-puedo-ver.gif", "ya-puedo-ver.mp3", 7200),
-        Clip(3658, "rosa.gif", "rosa.mp3", 6000),
-        Clip(3639, "se-mamo.gif", "se-mamo.mp3", 4000),
-        Clip(53, "rata.gif", "rata.mp3", 6000),
-        Clip(3663, "disfrazar.gif", "disfrazar.mp3", 5000),
-        Clip(
-            3665,
-            "ah-no-bueno-memo.gif",
-            "ah-no-bueno-memo.mp3",
-            6000
-        ),
-        Clip(3667, "hermoso.gif", "hermoso.mp3", 6000)
-    )
+    private val clips = ClipController().clipData()
 
     /**
      * Root view, shows a default image at the beginning of times
@@ -97,7 +69,7 @@ class MyView : View(), NativeKeyListener {
                 }
             }
             playSound(clip.sound)
-            replaceImage(clip.imageOfGif)
+            replaceImage(clip.imageOrGif)
         } else {
             println("Cannot play clip")
         }

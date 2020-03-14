@@ -1,0 +1,20 @@
+[
+  { "keyCode": 11, "imageOrGif":  "mesi-goal.gif", "sound": "mesi-goal.mp3", "timeout": 13000},
+  { "keyCode": 83, "imageOrGif":  "gio-gol.gif", "sound": "gio-gol.mp3", "timeout": 13000},
+  { "keyCode": 2 , "imageOrGif":  "helpme.gif", "sound": "helpme.mp3", "timeout": 5000},
+  { "keyCode": 3, "imageOrGif":  "parrot-wtf.gif", "sound": "parrot-wtf.mp3", "timeout": 4500},
+  { "keyCode": 4, "imageOrGif":  "jump-pussy.gif", "sound": "jump-pussy.mp3", "timeout": 8000},
+  { "keyCode": 5, "imageOrGif":  "no-please.gif", "sound": "no-please.mp3", "timeout": 8000},
+  { "keyCode": 6, "imageOrGif":  "estamos-en-la-b.gif", "sound": "estamos-en-la-b.mp3", "timeout": 10000},
+  { "keyCode": 7, "imageOrGif":  "tom-scream.gif", "sound": "tom-scream.mp3", "timeout": 3500},
+  { "keyCode": 8, "imageOrGif":  "cell-terror.gif", "sound": "cell-terror.mp3", "timeout": 5000},
+  { "keyCode": 9, "imageOrGif":  "cherc.gif", "sound": "cherc.mp3", "timeout": 4000},
+  { "keyCode": 10, "imageOrGif":  "yoloooo.gif", "sound": "yoloooo.mp3", "timeout": 5000},
+  { "keyCode": 3662, "imageOrGif":  "ya-puedo-ver.gif", "sound": "ya-puedo-ver.mp3", "timeout": 7200},
+  { "keyCode": 3658, "imageOrGif":  "rosa.gif", "sound": "rosa.mp3", "timeout": 6000},
+  { "keyCode": 3639, "imageOrGif":  "se-mamo.gif", "sound": "se-mamo.mp3", "timeout": 4000},
+  { "keyCode": 53, "imageOrGif":  "rata.gif", "sound": "rata.mp3", "timeout": 6000},
+  { "keyCode": 3663, "imageOrGif":  "disfrazar.gif", "sound": "disfrazar.mp3", "timeout": 5000},
+  { "keyCode": 3665, "imageOrGif":  "ah-no-bueno-memo.gif", "sound": "ah-no-bueno-memo.mp3", "timeout": 6000},
+  { "keyCode": 3667, "imageOrGif":  "hermoso.gif", "sound": "hermoso.mp3", "timeout": 6000}
+]

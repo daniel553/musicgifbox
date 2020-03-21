@@ -102,7 +102,11 @@ class MyView : View(), NativeKeyListener {
      * @param url - a new image path from resources
      */
     private fun replaceImage(url: String) {
-        mainImageView?.image = Image(url)
+        try {
+            mainImageView?.image = Image(url)
+        } catch (iae: IllegalArgumentException) {
+            println(iae.message)
+        }
     }
 
     /**

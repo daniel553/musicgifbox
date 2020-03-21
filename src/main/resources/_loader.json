@@ -13,6 +13,7 @@
   { "keyCode": 3662, "imageOrGif":  "memes/ya-puedo-ver.gif", "sound": "memes/ya-puedo-ver.mp3", "timeout": 7200},
   { "keyCode": 3658, "imageOrGif":  "canciones/rosa.gif", "sound": "canciones/rosa.mp3", "timeout": 5000},
   { "keyCode": 3639, "imageOrGif":  "memes/se-mamo.gif", "sound": "memes/se-mamo.mp3", "timeout": 4000},
+  { "keyCode": 53, "imageOrGif":  "memes/rata.gif", "sound": "memes/rata.mp3", "timeout": 6000},
   { "keyCode": 29, "imageOrGif":  "memes/se-esta-quemando-el-carro.gif", "sound": "memes/se-esta-quemando-el-carro.mp3", "timeout": 5000},
   { "keyCode": 3638, "imageOrGif":  "memes/gracias-cerda.gif", "sound": "memes/gracias-cerda.mp3", "timeout": 6000},
 

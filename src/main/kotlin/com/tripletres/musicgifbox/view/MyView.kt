@@ -81,17 +81,19 @@ class MyView : View(), NativeKeyListener {
         val clip = clips.find { it.keyCode == keyCode }
 
         if (clip != null) {
-            if(clip.timeout > 0){
-                //Create a time out.
-                GlobalScope.launch {
-                    delay(clip.timeout)
-                    //Reset default image
-                    replaceImage(defaultImagePath)
-                    stopCurrentSound()
+            playSound(clip.sound).also {
+                if(clip.timeout > 0){
+                    //Create a time out.
+                    GlobalScope.launch {
+                        delay(clip.timeout)
+                        //Reset default image
+                        replaceImage(defaultImagePath)
+                        stopCurrentSound()
+                    }
                 }
             }
-            playSound(clip.sound)
             replaceImage(clip.imageOrGif)
+
         } else {
             println("Cannot play clip")
         }

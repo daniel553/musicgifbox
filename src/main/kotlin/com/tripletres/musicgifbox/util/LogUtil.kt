@@ -14,4 +14,7 @@ object LogUtil {
     fun e(t: String, msg: String, err: Throwable?) {
         println("$t --- $msg : $err")
     }
+    fun e(t: String, msg: String) {
+        LogUtil.e(t, msg, null)
+    }
 }

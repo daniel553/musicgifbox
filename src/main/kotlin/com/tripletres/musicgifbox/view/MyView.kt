@@ -3,6 +3,7 @@ package com.tripletres.musicgifbox.view
 import com.tripletres.musicgifbox.controller.ClipController
 import com.tripletres.musicgifbox.model.Clip
 import com.tripletres.musicgifbox.util.KeyListener
+import com.tripletres.musicgifbox.util.LogUtil
 import com.tripletres.musicgifbox.util.SoundPlayer
 import javafx.scene.control.Button
 import javafx.scene.image.Image
@@ -81,21 +82,9 @@ class MyView : View(), NativeKeyListener {
         val clip = clips.find { it.keyCode == keyCode }
 
         if (clip != null) {
-            playSound(clip.sound).also {
-                if(clip.timeout > 0){
-                    //Create a time out.
-                    GlobalScope.launch {
-                        delay(clip.timeout)
-                        //Reset default image
-                        replaceImage(defaultImagePath)
-                        stopCurrentSound()
-                    }
-                }
-            }
-            replaceImage(clip.imageOrGif)
-
+            playClip(clip)
         } else {
-            println("Cannot play clip")
+            LogUtil.e("MyView","Cannot play clip")
         }
     }
 
@@ -107,16 +96,19 @@ class MyView : View(), NativeKeyListener {
         try {
             mainImageView?.image = Image(url)
         } catch (iae: IllegalArgumentException) {
-            println(iae.message)
+            LogUtil.e("MyView",iae.message!!, iae)
         }
     }
 
     /**
-     * Starts playing a sound with parameter
-     * @param path - a sound path from resources
+     * Starts playing a sound and replaces images when ready
+     * @param clip - a valid clip
      */
-    private fun playSound(path: String) {
-        SoundPlayer.play(path)
+    private fun playClip(clip: Clip) {
+        SoundPlayer.play(clip.sound, clip.timeout, callback = object : SoundPlayer.PlayerCallback{
+            override fun onReady() = replaceImage(clip.imageOrGif)
+            override fun onStop() = replaceImage(defaultImagePath)
+        })
     }
 
     /**
@@ -130,7 +122,7 @@ class MyView : View(), NativeKeyListener {
     override fun nativeKeyPressed(e: NativeKeyEvent) {
         if(e.keyCode == 1) exit()
 
-        println("-------------------${e.keyCode}--------------------------")
+        LogUtil.i("-------------------${e.keyCode}--------------------------")
         showAnimation(e.keyCode)
     }
     override fun nativeKeyReleased(e: NativeKeyEvent) {}

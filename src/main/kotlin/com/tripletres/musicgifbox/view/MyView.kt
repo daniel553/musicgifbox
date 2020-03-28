@@ -2,20 +2,15 @@ package com.tripletres.musicgifbox.view
 
 import com.tripletres.musicgifbox.controller.ClipController
 import com.tripletres.musicgifbox.model.Clip
-import com.tripletres.musicgifbox.util.KeyListener
-import com.tripletres.musicgifbox.util.LogUtil
-import com.tripletres.musicgifbox.util.SoundPlayer
-import javafx.scene.control.Button
-import javafx.scene.image.Image
+import com.tripletres.musicgifbox.util.*
 import javafx.scene.image.ImageView
 import javafx.scene.paint.Color
-import javafx.stage.StageStyle
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.jnativehook.keyboard.NativeKeyEvent
 import org.jnativehook.keyboard.NativeKeyListener
-import tornadofx.*
+import tornadofx.View
+import tornadofx.imageview
+import tornadofx.stackpane
+import tornadofx.toProperty
 import kotlin.system.exitProcess
 
 /**
@@ -84,7 +79,7 @@ class MyView : View(), NativeKeyListener {
         if (clip != null) {
             playClip(clip)
         } else {
-            LogUtil.e("MyView","Cannot play clip")
+            LogUtil.e(tag, "Cannot play clip")
         }
     }
 
@@ -94,9 +89,12 @@ class MyView : View(), NativeKeyListener {
      */
     private fun replaceImage(url: String) {
         try {
-            mainImageView?.image = Image(url)
+            mainImageView?.image = null
+            mainImageView?.image = ImageLoader.loadImage(url)
         } catch (iae: IllegalArgumentException) {
-            LogUtil.e("MyView",iae.message!!, iae)
+            LogUtil.e(tag, iae.message!!, iae)
+        } catch (npe: NullPointerException) {
+            LogUtil.e(tag, npe.message!!, npe)
         }
     }
 
@@ -105,33 +103,39 @@ class MyView : View(), NativeKeyListener {
      * @param clip - a valid clip
      */
     private fun playClip(clip: Clip) {
-        SoundPlayer.play(clip.sound, clip.timeout, callback = object : SoundPlayer.PlayerCallback{
+        SoundPlayer.play(clip.sound, clip.timeout, callback = object : SoundPlayer.PlayerCallback {
             override fun onReady() = replaceImage(clip.imageOrGif)
             override fun onStop() = replaceImage(defaultImagePath)
         })
     }
 
     /**
-     * Stops player from current sound play
+     * Stops player and clip, resets to default
      */
-    private fun stopCurrentSound(){
-        SoundPlayer.stop()
+    private fun stopCurrent() {
+        SoundPlayer.stop(object : SoundPlayer.PlayerCallback {
+            override fun onReady() {}
+            override fun onStop() = replaceImage(defaultImagePath)
+        })
     }
 
     override fun nativeKeyTyped(e: NativeKeyEvent) {}
     override fun nativeKeyPressed(e: NativeKeyEvent) {
-        if(e.keyCode == 1) exit()
-
         LogUtil.i("-------------------${e.keyCode}--------------------------")
-        showAnimation(e.keyCode)
+        when (e.keyCode) {
+            1 -> exit()
+            2 -> stopCurrent()
+            else -> showAnimation(e.keyCode)
+        }
     }
+
     override fun nativeKeyReleased(e: NativeKeyEvent) {}
 
     /**
      * Exits process when current window is focus
      */
     private fun exit() {
-        if(currentWindow != null && currentWindow!!.isFocused)
+        if (currentWindow != null && currentWindow!!.isFocused)
             exitProcess(0)
     }
 

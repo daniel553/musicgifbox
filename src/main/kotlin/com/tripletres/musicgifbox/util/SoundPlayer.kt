@@ -8,7 +8,7 @@ import javafx.util.Duration
  * Sound player controls playback through [MediaPlayer] for any clip.
  */
 object SoundPlayer {
-    private var player: MediaPlayer?=null
+    private var player: MediaPlayer? = null
     private var sounds = mutableMapOf<String, Media>()
 
     /**
@@ -18,13 +18,13 @@ object SoundPlayer {
      * @param callback
      */
     fun play(path: String, timeout: Long?, callback: PlayerCallback? = null) {
-        if(player?.status == MediaPlayer.Status.PLAYING) {
+        if (player?.status == MediaPlayer.Status.PLAYING) {
             LogUtil.e(tag, "MediaPlayer is busy...")
             return
         }
 
         try {
-            if(!sounds.containsKey(path)) {
+            if (!sounds.containsKey(path)) {
                 //TODO: resource by path way
                 sounds[path] = Media(javaClass.getResource("../../../../$path").toString())
             }
@@ -38,7 +38,7 @@ object SoundPlayer {
             }
 
             timeout?.let {
-                if(it > 0.0)
+                if (it > 0.0)
                     player?.stopTime = Duration(it.toDouble())
             }
             player?.play()
@@ -50,10 +50,11 @@ object SoundPlayer {
     /**
      * Stop current player execution
      */
-    fun stop(){
-        try{
+    fun stop(callback: PlayerCallback?) {
+        try {
             player?.stop()
-        }catch (ex: Exception){
+            callback?.onStop()
+        } catch (ex: Exception) {
             LogUtil.e(tag, "sound can't be stopped", ex)
         }
     }

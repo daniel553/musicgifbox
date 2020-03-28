@@ -38,7 +38,8 @@ object SoundPlayer {
             }
 
             timeout?.let {
-                player?.stopTime = Duration(it.toDouble())
+                if(it > 0.0)
+                    player?.stopTime = Duration(it.toDouble())
             }
             player?.play()
         } catch (ex: Exception) {

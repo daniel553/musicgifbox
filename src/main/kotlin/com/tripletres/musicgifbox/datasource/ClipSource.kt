@@ -2,6 +2,8 @@ package com.tripletres.musicgifbox.datasource
 
 import com.tripletres.musicgifbox.model.Clip
 import com.tripletres.musicgifbox.util.FileReader
+import com.tripletres.musicgifbox.util.LogUtil
+import com.tripletres.musicgifbox.util.tag
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 
@@ -23,7 +25,7 @@ class ClipSource {
                 loadedClips.addAll(parseJsonStringToClip(FileReader.readFile("$RESOURCES_PATH$CLIP_DATA_FILE")))
             return loadedClips.toList()
         } catch (npe: NullPointerException) {
-            println("WARNING: no data fetched from clip data file${npe.message}")
+            LogUtil.e(tag, "WARNING: no data fetched from clip data file ${npe.message}", npe)
         }
         return emptyList()
     }
@@ -41,7 +43,7 @@ class ClipSource {
                 mutableList.add(json.parse(Clip.serializer(), it.jsonObject.toString()))
             }
         } catch (e: Exception) {
-            println("crazy things always happen to kotlinx ${e.message}")
+            LogUtil.e(tag, "crazy things always happen to kotlinx ${e.message}", e)
         }
         return mutableList
     }

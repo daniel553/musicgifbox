@@ -123,8 +123,8 @@ class MyView : View(), NativeKeyListener {
     override fun nativeKeyPressed(e: NativeKeyEvent) {
         LogUtil.i("-------------------${e.keyCode}--------------------------")
         when (e.keyCode) {
-            1 -> exit()
-            2 -> stopCurrent()
+            1 -> exit()         // Escape
+            57 -> stopCurrent() // Space
             else -> showAnimation(e.keyCode)
         }
     }

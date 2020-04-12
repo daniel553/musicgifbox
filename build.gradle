@@ -39,8 +39,6 @@ compileTestKotlin {
 
 jar {
     manifest {
-        attributes(
-                'Main-Class': 'AppLauncher'
-        )
+        attributes 'Main-Class' : 'com.tripletres.musicgifbox.MainKt'
     }
 }

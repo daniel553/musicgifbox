@@ -22,7 +22,7 @@ class ClipSource {
     fun getClipData(): List<Clip> {
         try {
             if (loadedClips.isEmpty())
-                loadedClips.addAll(parseJsonStringToClip(FileReader.readFile("$RESOURCES_PATH$CLIP_DATA_FILE")))
+                loadedClips.addAll(parseJsonStringToClip(FileReader.readFile(CLIP_DATA_FILE)))
             return loadedClips.toList()
         } catch (npe: NullPointerException) {
             LogUtil.e(tag, "WARNING: no data fetched from clip data file ${npe.message}", npe)
@@ -49,7 +49,6 @@ class ClipSource {
     }
 
     companion object {
-        const val CLIP_DATA_FILE = "_loader.json"
-        const val RESOURCES_PATH = "../../../../"
+        const val CLIP_DATA_FILE = "C:\\Users\\Daniel\\Desktop\\clipparts\\_loader.json"
     }
 }

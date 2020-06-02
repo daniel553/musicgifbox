@@ -3,6 +3,7 @@ package com.tripletres.musicgifbox.util
 import javafx.scene.media.Media
 import javafx.scene.media.MediaPlayer
 import javafx.util.Duration
+import java.io.File
 
 /**
  * Sound player controls playback through [MediaPlayer] for any clip.
@@ -25,8 +26,7 @@ object SoundPlayer {
 
         try {
             if (!sounds.containsKey(path)) {
-                //TODO: resource by path way
-                sounds[path] = Media(javaClass.getResource("../../../../$path").toString())
+                sounds[path] = Media(path)
             }
             player = MediaPlayer(sounds[path])
             player?.setOnReady {

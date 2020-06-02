@@ -12,4 +12,4 @@ import kotlinx.serialization.Serializable
  * @param timeout - [0..N] positive long for seconds to time out.
  */
 @Serializable
-data class Clip(val keyCode: Int, val imageOrGif: String, val sound: String, val timeout: Long = 0)
+data class Clip(val keyCode: Int, var imageOrGif: String, var sound: String, val timeout: Long = 0)

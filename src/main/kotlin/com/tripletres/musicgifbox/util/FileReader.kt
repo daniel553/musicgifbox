@@ -1,6 +1,7 @@
 package com.tripletres.musicgifbox.util
 
 import java.io.BufferedReader
+import java.io.File
 
 /**
  * Simple file reader
@@ -16,7 +17,7 @@ object FileReader {
         var content = "";
         var bufferedReader: BufferedReader?  = null
         try {
-            bufferedReader = javaClass.getResourceAsStream(path).bufferedReader()
+            bufferedReader = File(path).bufferedReader()
             content = bufferedReader.readLines().joinToString(separator = separator)
         }catch (ex: Exception){
             LogUtil.e("FileReader", ex.localizedMessage, ex)
